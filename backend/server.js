@@ -9,6 +9,7 @@ dotenv.config();
 
 const app = express();
 
+const SERVICE = require("./routes/Service/ServiceRoute")
 
 
 // Body parser middleware
@@ -22,6 +23,7 @@ app.use(
 );
 
 //route middleware
+app.use(SERVICE);
 
 
 
