@@ -9,7 +9,8 @@ dotenv.config();
 
 const app = express();
 
-const SERVICE = require("./routes/Service/ServiceRoute")
+// const DONATION = require("./routes/Donation/Donation")
+const DONATION = require("./routes/Donation/DonationRoute")
 
 
 // Body parser middleware
@@ -23,7 +24,7 @@ app.use(
 );
 
 //route middleware
-app.use(SERVICE);
+app.use(DONATION);
 
 
 
