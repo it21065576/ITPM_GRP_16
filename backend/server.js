@@ -1,41 +1,43 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const config = require("config");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const dotenv = require("dotenv");
-dotenv.config();
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-
+const dotenv = require('dotenv')
+dotenv.config()
 const app = express();
 
 
+const postRoutesfeedback = require('./routes/feedback');
+const postRoutesuser = require('./routes/user');
 
-// Body parser middleware
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(
-    express.urlencoded({
-        extended: false,
+app.use(postRoutesfeedback);
+app.use(postRoutesuser);
+const PORT =8000;
+
+
+
+const DB_URL = process.env.DB_URI;
+
+
+//connect to db
+mongoose.connect(process.env.DB_URL)
+    .then(() =>{
+        //listen for requests
+        app.listen(process.env.PORT,() =>{
+        console.log("connected to db ")
     })
-);
 
-//route middleware
-
-
-
-app.use(express.json());
-// DB Config
-const db = config.get("mongoURI");
-// Connect to MongoDB
-mongoose
-    .connect(db, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
     })
-    .then(() => console.log("MongoDB successfully connected"))
-    .catch((err) => console.log(err));
+    .catch((error) =>{
 
-const port = process.env.PORT || 8002;
-app.listen(port, () => console.log(`Server up and running on port ${port} !`));
+    })
+
+
+
+app.listen(PORT, ()=>{
+    console.log(`App is running on ${PORT}`);
+});
