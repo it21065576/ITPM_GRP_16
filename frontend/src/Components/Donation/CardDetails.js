@@ -3,7 +3,7 @@ import Navbar from '../Navbar';
 import "../../Styles/cardDetails.css"
 import React,{ useState, useEffect } from "react";
 import axios from "axios";
-import { useParams} from "react-router-dom";
+import { Navigate, useParams} from "react-router-dom";
 
 function CardDetails() {
   const [cardno, setcardno] = useState([]);
@@ -51,9 +51,10 @@ function CardDetails() {
   .then(() => {
     alert("Details successfully added");
     refreshPage();
+    
   })
   .catch((err) => {
-    alert("Error: Details not added");
+    alert("Error: Details no");
     console.log(err);
   });
 
@@ -81,7 +82,7 @@ function CardDetails() {
       <div className="container">
         <center>
         <div className="row">
-          <div className="col-xs-12 col-md-6 col-md-offset-3">
+          <div className="col-xs-12 col-md-6 col-md-offset-3" style={{marginLeft:"250px"}}>
             <div className="panel panel-default">
               <div className="panel-heading">
                 <div className="row">
@@ -111,7 +112,7 @@ function CardDetails() {
                 </div>
               </div>
               <div className="panel-body">
-              <center>
+              
                 <form role="form" onSubmit={sendData}> 
                   <div className="row">
                     <div className="col-xs-12">
@@ -187,12 +188,15 @@ function CardDetails() {
                   <div className="col-xs-12">
                     <button className="btn btn-success btn-lg btn-block" type="submit" >
                       Confirm Payment
-                    </button>               
+                    </button> 
+                    <br></br>
+                              
                   </div>
                 </div>
               </div>
             </div>
-                </form></center>
+                </form>
+                 
               </div>
            
           </div>
@@ -201,7 +205,13 @@ function CardDetails() {
       </center>
       {/* Credit Card Payment Form - END */}
     </div>
+    <a href="/">
+                    <button className="btn btn-success btn-lg btn-block" type="submit" >
+                      Back to Donate Page
+                    </button></a> 
     </div>
+
+    
     <div>
         <Footer/>
     </div>
