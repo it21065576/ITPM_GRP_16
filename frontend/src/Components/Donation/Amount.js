@@ -1,12 +1,14 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 // import "../styles/project_css/navBar.css";
-import Image from "../../Images/download.jpg"
+import Image from "../../Images/donar.jpg"
 import { lightBlue } from "@mui/material/colors";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import "../../Styles/amount.css";
+import Footer from '../Footer';
+import Navbar from '../Navbar';
 import {
   Button,
   Dialog,
@@ -73,13 +75,17 @@ export default function Amount() {
 
 
 
-    return (<div className="nav_main_container">
-
-      
-
-     
+    return (
+      <>
+      <div>
+      <Navbar />
+      </div>
+    
+    <div className="nav_main_container"> 
      <div className="card-track">
-       <h3 className="tname">Project</h3>
+       <center><b><h1 className="tname">Donar Details</h1></b>
+       <h6>You can edit your details after click this card.</h6>
+       </center>
        {donation.map((a, index) => (
          <div key={index}>
            <div className="sidecard">
@@ -120,10 +126,19 @@ export default function Amount() {
          </Box>
        </DialogActions>
      </Dialog>
+     <center><a href="/cardDetails">
+          <button type="button" className="btn btn-primary">
+            NEXT
+          </button></a></center>
+     
     
    </div>
+
+   <div>
+        <Footer/>
+    </div>
    
-        
+   </>   
 
 
             
