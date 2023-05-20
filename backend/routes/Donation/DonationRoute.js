@@ -1,6 +1,6 @@
 // const {request} = request('express');
 const express = require("express");
-const Donation = require("../../models/Donation/Donation");
+const Donation = require("../../models/Donation/DonarDetails");
 
 const router = express.Router();
 
@@ -17,26 +17,25 @@ router.post("/donation/save", (req, res) => {
         }
 
         return res.status(200).json({
-            success: "Services Added Successfully",
+            success: "Details Added Successfully",
         });
     });
 });
 
 //Get Service
-router.get("/donation", async (req, res) => {
-    await Donation.find()
-
-        .then((Donation) => {
-
-            res.json(Donation);
-
-        })
-
-        .catch((err) => {
-
-            console.log(err);
-
+// 
+router.get('/donation',(req,res) =>{
+    Donation.find().exec((err,Donation) =>{
+        if(err){
+            return res.status(400).json({
+                error:err
+            });
+        }
+        return res.status(200).json({
+            success:true,
+            existingProject:Donation
         });
+    });
 });
 
 //get a specific Service provider
