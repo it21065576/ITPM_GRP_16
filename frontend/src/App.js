@@ -5,16 +5,20 @@ import { Route, Routes } from "react-router-dom";
  
 // We import all the components we need in our app
 // import Navbar from "./Components/Service/create";
-import RecordList from "./Components/Service/recordList";
-import Edit from "./Components/Service/edit";
-import Create from "./Components/Service/create";
+// import RecordList from "./Components/Service/recordList";
+// import Edit from "./Components/Service/edit";
+// import Create from "./Components/Service/create";
 
-import ServiceDetails from "./Components/Service/ServiceDetails";
-import AddService from "./Components/Service/AddService";
-import ServiceDash from "./Components/Service/ServiceDash";
+// import ServiceDetails from "./Components/Service/ServiceDetails";
+// import AddService from "./Components/Service/AddService";
+// import ServiceDash from "./Components/Service/ServiceDash";
+
 import DonatePage from "./Components/Donation/DonatePage";
-import AddBasket from "./Components/Donation/AddBasket"
-import AddForm from "./Components/Donation/AddForm"
+// import AddBasket from "./Components/Donation/AddBasket";
+import AddForm from "./Components/Donation/AddForm";
+import CardDetails from "./Components/Donation/CardDetails";
+import EditForm from "./Components/Donation/EditForm";
+import Amount from "./Components/Donation/Amount";
 
  
 const App = () => {
@@ -26,12 +30,15 @@ const App = () => {
        <Route path="/edit/:id" element={<Edit />} />
        <Route path="/create" element={<Create />} /> */}
        <Route path="/" element={<DonatePage/>}/>
-       <Route path="/add" element={<AddBasket/>}/>
+       {/* <Route path="/add" element={<AddBasket/>}/> */}
        <Route path="/addForm" element={<AddForm/>}/>
+       <Route path="/cardDetails" element={<CardDetails/>}/>
+       <Route path="/editForm/:id" element={<EditForm/>}/>
+       <Route path="/amount" element={<Amount/>}/>
 
-       <Route path="/sdetails" element={<ServiceDetails/>}/>
+       {/* <Route path="/sdetails" element={<ServiceDetails/>}/>
        <Route path="/addService" element={<AddService/>}/>
-       <Route path="/serviceDash" element={<ServiceDash/>}/>
+       <Route path="/serviceDash" element={<ServiceDash/>}/> */}
      </Routes>
    </div>
  );
