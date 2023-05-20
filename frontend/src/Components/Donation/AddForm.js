@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams} from "react-router-dom";
+import { Navigate, useParams} from "react-router-dom";
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 import Button from 'react-bootstrap/Button';
@@ -51,6 +51,7 @@ export default function AddForm() {
 
       alert("Details successfully added",refreshPage());
       //console.log(newAppointment);
+      <a href="/amount"></a>
 
     }).catch((err)=>{
 
@@ -185,12 +186,18 @@ export default function AddForm() {
       }} required/>
       </div><br/>
 
-      <a href ="/amount"><input  type="submit" id="saveBtn"  value="SUBMIT"></input></a>
+      
+      <input  type="submit" id="saveBtn"  value="SUBMIT"></input>
+      <br/>
+      <br/>
+
+      <a href="/amount">
+          <button type="button" className="btn btn-primary">
+           NEXT
+          </button>
+        </a>
       </form>
 </div>
-
-
-
 
 
 </div>
