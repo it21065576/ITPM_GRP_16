@@ -138,6 +138,13 @@ export default function AddForm() {
                                 <i className="far fa-check-square"></i>
                                 &nbsp; EDIT DETAILS
                             </button>
+                            <br/>
+                            <br/>
+                            <a href="/amount">
+          <button type="button" className="btn btn-primary">
+            Back
+          </button>
+          </a>                   
      
       </form>
     
