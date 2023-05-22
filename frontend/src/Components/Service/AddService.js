@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import swal from 'sweetalert';
-import './Navbar/ServiceNavbar';
 import SaveIcon from "@material-ui/icons/Save";
 import Button from "@material-ui/core/Button";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, navigate } from 'react-router-dom';
+import { TextField } from '@material-ui/core';
+import Swal from 'sweetalert2';
+
+
 
 
 export default function AddService(props) {
@@ -68,9 +70,9 @@ export default function AddService(props) {
         const emi = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         if ((!ph.test(String(phone))) || phone.length !== 10) {
-            swal('Invalid Contact Number !', 'contact number should be valid pattern', 'error');
+            Swal.fire('Invalid Contact Number !', 'contact number should be valid pattern', 'error');
         } else if ((!emi.test(String(email)))) {
-            swal('Invalid email address !', 'Please enter valid email address', 'error');
+            Swal.fire('Invalid email address !', 'Please enter valid email address', 'error');
         } else if (
             fName.length === 0 ||
             lName.length === 0 ||
@@ -82,11 +84,18 @@ export default function AddService(props) {
             job.length === 0 ||
             position.length === 0
         ) {
-            swal('Please fill all the details');
+            Swal.fire('Please fill all the details');
         } else {
             axios.post('http://localhost:8002/service/save', data).then((res) => {
                 if (res.data.success) {
-                    swal('Details Saved Successfully');
+                    // Swal.fire('Details Saved Successfully');
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Details Saved Successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
                     navigate('/serviceDash'); // Navigate to '/serviceDash'
                     setFormData({
                         fName: '',
@@ -103,39 +112,27 @@ export default function AddService(props) {
             });
 
 
+
         }
     };
 
     return (
         <>
-            {/* <MDBRow className='d-flex justify-content-center'> */}
-            {/* <MDBCol md='6' className='bg-primary mt-5 text-white'> */}
             <div className="order_bground" style={{ zIndex: 98, height: "100vh" }}>
                 <div className="order_bground" style={{ zIndex: 98, height: "100vh" }}>
-                    <div style={{ marginLeft: "10%", marginBlockStart: "-4%" }}>
+                    <div style={{ marginLeft: "28%", marginBlockStart: "3%" }}>
                         <div class="card" style={{ width: "60%", height: "100%" }}>
                             <div class="card-body">
                                 <center>
                                     <h1>
-                                        <span class="badge bg-warning text-dark opacity-90">
+                                        <span class="badge bg-warning text-dark opacity-90" >
                                             Add New Service Provider
                                         </span>
                                     </h1>
                                 </center>
-                                <form className="need-validation" noValidate>
-                                    {/* <div className="form-group" style={{ marginBottom: "15px" }}>
-                                        <label style={{ marginBottom: "5px" }}>Employee ID</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="EmpID"
-                                            placeholder="Enter Employee ID"
-                                            value={formData.EmpID}
-                                            onChange={handleInputChange}
-                                        />
-                                    </div> */}
+                                <form className="need-validation" noValidate >
 
-                                    <div className="form-group" style={{ marginBottom: "15px" }}>
+                                    {/* <div className="form-group" style={{ marginBottom: "15px" }}>
                                         <label style={{ marginBottom: "5px" }}>First Name</label>
                                         <input
                                             type="textarea"
@@ -145,9 +142,21 @@ export default function AddService(props) {
                                             value={formData.fName}
                                             onChange={handleInputChange}
                                         />
-                                    </div>
+                                    </div> */}
 
-                                    <div className="form-group" style={{ marginBottom: "15px" }}>
+                                    <TextField
+                                        type="text"
+                                        label="First Name"
+                                        variant="outlined"
+                                        name="fName"
+                                        placeholder="Enter First Name"
+                                        value={formData.fName}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                        style={{ marginBottom: '25px', marginBlockStart: "4%" }}
+                                    />
+
+                                    {/* <div className="form-group" style={{ marginBottom: "15px" }}>
                                         <label style={{ marginBottom: "5px" }}>Last Name</label>
                                         <input
                                             type="text"
@@ -157,9 +166,21 @@ export default function AddService(props) {
                                             value={formData.lName}
                                             onChange={handleInputChange}
                                         />
-                                    </div>
+                                    </div> */}
 
-                                    <div className="form-group" style={{ marginBottom: "15px" }}>
+                                    <TextField
+                                        type="text"
+                                        label="Last Name"
+                                        variant="outlined"
+                                        name="lName"
+                                        placeholder="Enter Last Name"
+                                        value={formData.lName}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                        style={{ marginBottom: '25px' }}
+                                    />
+
+                                    {/* <div className="form-group" style={{ marginBottom: "15px" }}>
                                         <label style={{ marginBottom: "5px" }}>Address</label>
                                         <input
                                             type="textarea"
@@ -169,9 +190,21 @@ export default function AddService(props) {
                                             value={formData.address}
                                             onChange={handleInputChange}
                                         />
-                                    </div>
+                                    </div> */}
 
-                                    <div className="form-group" style={{ marginBottom: "15px" }}>
+                                    <TextField
+                                        type="textarea"
+                                        label="Address"
+                                        variant="outlined"
+                                        name="address"
+                                        placeholder="Enter Address"
+                                        value={formData.address}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                        style={{ marginBottom: '25px' }}
+                                    />
+
+                                    {/* <div className="form-group" style={{ marginBottom: "15px" }}>
                                         <label style={{ marginBottom: "5px" }}>NIC</label>
                                         <input
                                             type="text"
@@ -181,9 +214,22 @@ export default function AddService(props) {
                                             value={formData.nic}
                                             onChange={handleInputChange}
                                         />
-                                    </div>
+                                    </div> */}
 
-                                    <div className="form-group" style={{ marginBottom: "15px" }}>
+                                    <TextField
+                                        type="text"
+                                        label="NIC"
+                                        variant="outlined"
+                                        name="nic"
+                                        placeholder="Enter NIC no"
+                                        value={formData.nic}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                        style={{ marginBottom: '25px' }}
+                                    />
+
+
+                                    {/* <div className="form-group" style={{ marginBottom: "15px" }}>
                                         <label style={{ marginBottom: "5px" }}>
                                             Contact Number
                                         </label>
@@ -195,10 +241,21 @@ export default function AddService(props) {
                                             value={formData.phone}
                                             onChange={handleInputChange}>
                                         </input>
-                                    </div>
+                                    </div> */}
 
+                                    <TextField
+                                        type="text"
+                                        label="Contact Number"
+                                        variant="outlined"
+                                        name="phone"
+                                        placeholder="Enter Mobile no"
+                                        value={formData.phone}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                        style={{ marginBottom: '25px' }}
+                                    />
 
-                                    <div className="form-group" style={{ marginBottom: '15px' }}>
+                                    {/* <div className="form-group" style={{ marginBottom: '15px' }}>
                                         <label style={{ marginBottom: '5px' }}>Email Address</label>
                                         <input type="text"
                                             className="form-control"
@@ -206,28 +263,47 @@ export default function AddService(props) {
                                             placeholder="Enter Email Address"
                                             value={formData.email}
                                             onChange={handleInputChange} />
-                                    </div>
+                                    </div> */}
 
-                                    <div className="form-group col-md-4" style={{ marginBottom: '15px' }}>
+                                    <TextField
+                                        type="text"
+                                        label="Email Address"
+                                        variant="outlined"
+                                        name="email"
+                                        placeholder="Enter Email Address"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                        style={{ marginBottom: '25px' }}
+                                    />
+
+                                    {/* <div className="form-group col-md-4" style={{ marginBottom: '15px' }}>
                                         <label style={{ marginBottom: '5px' }}>Gender</label>
                                         <select name="gender" onChange={handleInputChange} value={formData.gender} defaultValue="Select Type" class="form-control">
                                             <option defaultValue>-- Select Gender --</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
-                                    </div>
-
-                                    {/* <div className="form-group" style={{ marginBottom: '15px' }}>
-                                        <label style={{ marginBottom: '5px' }}>Job Title</label>
-                                        <input type="text"
-                                            className="form-control"
-                                            name="job"
-                                            placeholder="Enter Department"
-                                            value={formData.job}
-                                            onChange={handleInputChange} />
                                     </div> */}
 
-                                    <div className="form-group col-md-4" style={{ marginBottom: '15px' }}>
+                                    <TextField
+                                        select
+                                        label="Gender"
+                                        variant="outlined"
+                                        name="gender"
+                                        value={formData.gender}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                        style={{ marginBottom: '25px', cursor: "pointer" }}
+                                    >
+                                        <option value="" disabled>
+                                            -- Select Gender --
+                                        </option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </TextField>
+
+                                    {/* <div className="form-group col-md-4" style={{ marginBottom: '15px' }}>
                                         <label style={{ marginBottom: '5px' }}>Job Title</label>
                                         <select name="job" onChange={handleInputChange} value={formData.job} defaultValue="Select Type" class="form-control">
                                             <option defaultValue>-- Select Job --</option>
@@ -237,9 +313,29 @@ export default function AddService(props) {
                                             <option value="Lawyer">Lawyer</option>
                                             <option value="Other">Other</option>
                                         </select>
-                                    </div>
+                                    </div> */}
 
-                                    <div className="form-group" style={{ marginBottom: '15px' }}>
+                                    <TextField
+                                        select
+                                        label="Job Title"
+                                        variant="outlined"
+                                        name="job"
+                                        value={formData.job}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                        style={{ marginBottom: '25px', cursor: "pointer" }}
+                                    >
+                                        <option value="" disabled>
+                                            -- Select Job --
+                                        </option>
+                                        <option value="Doctor">Doctor</option>
+                                        <option value="Police">Police</option>
+                                        <option value="Counsellor">Counsellor</option>
+                                        <option value="Lawyer">Lawyer</option>
+                                        <option value="Other">Other</option>
+                                    </TextField>
+
+                                    {/* <div className="form-group" style={{ marginBottom: '15px' }}>
                                         <label style={{ marginBottom: '5px' }}>Position</label>
                                         <input type="text"
                                             className="form-control"
@@ -247,25 +343,56 @@ export default function AddService(props) {
                                             placeholder="Enter Position"
                                             value={formData.position}
                                             onChange={handleInputChange} />
-                                    </div>
+                                    </div> */}
+
+                                    <TextField
+                                        type="text"
+                                        label="Position"
+                                        variant="outlined"
+                                        name="position"
+                                        placeholder="Enter Position"
+                                        value={formData.position}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                        style={{ marginBottom: '25px' }}
+                                    />
+
 
                                 </form>
-                                <br></br>
-                                {/* <button className="btn btn-warning btn-lg text-dark" type="submit" style={{ marginTop: '15px', marginLeft: '185px' }} onClick={onSubmit}>
-                                        <i className="far fa-check-square" ></i>
-                                        &nbsp; <b>Save</b>
-                                    </button> */}
 
-                                <Button startIcon={<SaveIcon />} variant="contained" type="button" onClick={onSubmit}>
-                                    &nbsp; Save
+                                <Button
+                                    variant="contained"
+                                    type="submit"
+                                    onClick={btnDemo}
+                                    style={{
+                                        marginBottom: '25px',
+                                        marginLeft: '28%',
+                                        fontSize: '1rem',
+                                        padding: '10px 20px',
+                                    }}
+                                >
+                                    <i class="fas fa-bookmark"></i>
+                                    <span>&nbsp; <b>Demo</b></span>
                                 </Button>
 
-                                <button className="btn btn-success btn-lg text-dark" style={{ marginTop: '15px', marginLeft: '10px' }} type="submit" onClick={btnDemo}>
-                                    <i class='fas fa-bookmark'></i>
-                                    &nbsp; <b>Demo</b>
-                                </button>
+                                <Button
+                                    startIcon={<SaveIcon />}
+                                    variant="contained"
+                                    type="button"
+                                    onClick={onSubmit}
+                                    style={{
+                                        marginBottom: '25px',
+                                        marginLeft: '15%',
+                                        backgroundColor: 'forestgreen',
+                                        color: 'white',
+                                        fontSize: '1rem',
+                                        padding: '10px 20px',
+                                    }}
+                                >
+                                    Save
+                                </Button>
 
-                                <br></br>
+
 
                             </div>
                         </div>
@@ -273,10 +400,7 @@ export default function AddService(props) {
                     </div>
                 </div>
             </div>
-            {/* </MDBCol> */}
-            {/* </MDBRow> */}
         </>
-
     )
 }
 
