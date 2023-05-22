@@ -19,6 +19,7 @@ import AddForm from "./Components/Donation/AddForm";
 import CardDetails from "./Components/Donation/CardDetails";
 import EditForm from "./Components/Donation/EditForm";
 import Amount from "./Components/Donation/Amount";
+import View from "./Components/Donation/View";
 
  
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
        <Route path="/cardDetails" element={<CardDetails/>}/>
        <Route path="/editForm/:id" element={<EditForm/>}/>
        <Route path="/amount" element={<Amount/>}/>
+       <Route path="/view/:id" element={<View/>}/>
 
        {/* <Route path="/sdetails" element={<ServiceDetails/>}/>
        <Route path="/addService" element={<AddService/>}/>
