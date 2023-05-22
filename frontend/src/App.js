@@ -7,21 +7,27 @@ import { Route, Routes } from "react-router-dom";
 import ServiceDetails from "./Components/Service/ServiceDetails";
 import AddService from "./Components/Service/AddService";
 import ServiceDash from "./Components/Service/ServiceDash";
-import ServiceHome from "./Components/Service/ServiceHome"
+import ServiceHome from "./Components/Service/ServiceHome";
+import EditService  from './Components/Service/EditService'; 
+import ServiceReport from"./Components/Service/ServiceReport";
+
  
-const App = () => {
+
+// const App = () => {
+  function App() {
  return (
    <div>
      {/* <Navbar /> */}
      <Routes>
-       {/* <Route exact path="/" element={<RecordList />} />
-       <Route path="/edit/:id" element={<Edit />} />
-       <Route path="/create" element={<Create />} /> */}
 
-       <Route path="/sdetails" element={<ServiceDetails/>}/>
+       <Route path="/serviceDetails" element={<ServiceDetails/>}/>
        <Route path="/addService" element={<AddService/>}/>
        <Route path="/serviceDash" element={<ServiceDash/>}/>
        <Route path="/" element={<ServiceHome/>}/>
+       <Route path="/editService/:id" element={<EditService/>}/>
+       <Route path="/serviceReport" element={<ServiceReport/>}/> 
+
+
        
      </Routes>
    </div>
