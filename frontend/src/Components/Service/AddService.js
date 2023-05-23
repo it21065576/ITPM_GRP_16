@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 export default function AddService(props) {
 
     const [formData, setFormData] = useState({
+        sID:'',
         fName: '',
         lName: '',
         address: '',
@@ -35,6 +36,7 @@ export default function AddService(props) {
     const btnDemo = (e) => {
         e.preventDefault();
         setFormData({
+            sID:'S1100',
             fName: 'kamal',
             lName: 'liyanagama',
             address: '43/1,kalidasa road matara',
@@ -50,9 +52,10 @@ export default function AddService(props) {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        const { fName, lName, address, nic, phone, email, gender, job, position } = formData;
+        const { sID, fName, lName, address, nic, phone, email, gender, job, position } = formData;
 
         const data = {
+            sID: sID,
             fName: fName,
             lName: lName,
             address: address,
@@ -74,6 +77,7 @@ export default function AddService(props) {
         } else if ((!emi.test(String(email)))) {
             Swal.fire('Invalid email address !', 'Please enter valid email address', 'error');
         } else if (
+            sID.length === 0 ||
             fName.length === 0 ||
             lName.length === 0 ||
             address.length === 0 ||
@@ -98,6 +102,7 @@ export default function AddService(props) {
                       });
                     navigate('/serviceDash'); // Navigate to '/serviceDash'
                     setFormData({
+                        sID:'',
                         fName: '',
                         lName: '',
                         address: '',
@@ -132,17 +137,18 @@ export default function AddService(props) {
                                 </center>
                                 <form className="need-validation" noValidate >
 
-                                    {/* <div className="form-group" style={{ marginBottom: "15px" }}>
-                                        <label style={{ marginBottom: "5px" }}>First Name</label>
-                                        <input
-                                            type="textarea"
-                                            className="form-control"
-                                            name="fName"
-                                            placeholder="Enter First Name"
-                                            value={formData.fName}
-                                            onChange={handleInputChange}
-                                        />
-                                    </div> */}
+                                <TextField
+                                        type="text"
+                                        label="Service ID"
+                                        variant="outlined"
+                                        name="sID"
+                                        placeholder="Enter Service ID"
+                                        value={formData.sID}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                        style={{ marginBottom: '25px', marginBlockStart: "4%" }}
+                                    />
+                                 
 
                                     <TextField
                                         type="text"
@@ -156,17 +162,6 @@ export default function AddService(props) {
                                         style={{ marginBottom: '25px', marginBlockStart: "4%" }}
                                     />
 
-                                    {/* <div className="form-group" style={{ marginBottom: "15px" }}>
-                                        <label style={{ marginBottom: "5px" }}>Last Name</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="lName"
-                                            placeholder="Enter Last Name"
-                                            value={formData.lName}
-                                            onChange={handleInputChange}
-                                        />
-                                    </div> */}
 
                                     <TextField
                                         type="text"
@@ -180,18 +175,6 @@ export default function AddService(props) {
                                         style={{ marginBottom: '25px' }}
                                     />
 
-                                    {/* <div className="form-group" style={{ marginBottom: "15px" }}>
-                                        <label style={{ marginBottom: "5px" }}>Address</label>
-                                        <input
-                                            type="textarea"
-                                            className="form-control"
-                                            name="address"
-                                            placeholder="Enter Address"
-                                            value={formData.address}
-                                            onChange={handleInputChange}
-                                        />
-                                    </div> */}
-
                                     <TextField
                                         type="textarea"
                                         label="Address"
@@ -203,18 +186,6 @@ export default function AddService(props) {
                                         fullWidth
                                         style={{ marginBottom: '25px' }}
                                     />
-
-                                    {/* <div className="form-group" style={{ marginBottom: "15px" }}>
-                                        <label style={{ marginBottom: "5px" }}>NIC</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="nic"
-                                            placeholder="Enter NIC no"
-                                            value={formData.nic}
-                                            onChange={handleInputChange}
-                                        />
-                                    </div> */}
 
                                     <TextField
                                         type="text"
@@ -228,21 +199,6 @@ export default function AddService(props) {
                                         style={{ marginBottom: '25px' }}
                                     />
 
-
-                                    {/* <div className="form-group" style={{ marginBottom: "15px" }}>
-                                        <label style={{ marginBottom: "5px" }}>
-                                            Contact Number
-                                        </label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="phone"
-                                            placeholder="Enter Mobile no"
-                                            value={formData.phone}
-                                            onChange={handleInputChange}>
-                                        </input>
-                                    </div> */}
-
                                     <TextField
                                         type="text"
                                         label="Contact Number"
@@ -255,16 +211,6 @@ export default function AddService(props) {
                                         style={{ marginBottom: '25px' }}
                                     />
 
-                                    {/* <div className="form-group" style={{ marginBottom: '15px' }}>
-                                        <label style={{ marginBottom: '5px' }}>Email Address</label>
-                                        <input type="text"
-                                            className="form-control"
-                                            name="email"
-                                            placeholder="Enter Email Address"
-                                            value={formData.email}
-                                            onChange={handleInputChange} />
-                                    </div> */}
-
                                     <TextField
                                         type="text"
                                         label="Email Address"
@@ -276,15 +222,6 @@ export default function AddService(props) {
                                         fullWidth
                                         style={{ marginBottom: '25px' }}
                                     />
-
-                                    {/* <div className="form-group col-md-4" style={{ marginBottom: '15px' }}>
-                                        <label style={{ marginBottom: '5px' }}>Gender</label>
-                                        <select name="gender" onChange={handleInputChange} value={formData.gender} defaultValue="Select Type" class="form-control">
-                                            <option defaultValue>-- Select Gender --</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                        </select>
-                                    </div> */}
 
                                     <TextField
                                         select
@@ -302,18 +239,6 @@ export default function AddService(props) {
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </TextField>
-
-                                    {/* <div className="form-group col-md-4" style={{ marginBottom: '15px' }}>
-                                        <label style={{ marginBottom: '5px' }}>Job Title</label>
-                                        <select name="job" onChange={handleInputChange} value={formData.job} defaultValue="Select Type" class="form-control">
-                                            <option defaultValue>-- Select Job --</option>
-                                            <option value="Doctor">Doctor</option>
-                                            <option value="Police">Police</option>
-                                            <option value="Counsellor">Counsellor</option>
-                                            <option value="Lawyer">Lawyer</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div> */}
 
                                     <TextField
                                         select
@@ -334,16 +259,6 @@ export default function AddService(props) {
                                         <option value="Lawyer">Lawyer</option>
                                         <option value="Other">Other</option>
                                     </TextField>
-
-                                    {/* <div className="form-group" style={{ marginBottom: '15px' }}>
-                                        <label style={{ marginBottom: '5px' }}>Position</label>
-                                        <input type="text"
-                                            className="form-control"
-                                            name="position"
-                                            placeholder="Enter Position"
-                                            value={formData.position}
-                                            onChange={handleInputChange} />
-                                    </div> */}
 
                                     <TextField
                                         type="text"
