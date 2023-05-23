@@ -20,12 +20,13 @@ import ServiceReport from"./Components/Service/ServiceReport";
      {/* <Navbar /> */}
      <Routes>
 
-       <Route path="/serviceDetails" element={<ServiceDetails/>}/>
+       <Route path="/serviceDetails/:id" element={<ServiceDetails/>}/>
        <Route path="/addService" element={<AddService/>}/>
        <Route path="/serviceDash" element={<ServiceDash/>}/>
        <Route path="/" element={<ServiceHome/>}/>
        <Route path="/editService/:id" element={<EditService/>}/>
        <Route path="/serviceReport" element={<ServiceReport/>}/> 
+       {/* <Route path="/service/:id" component={ServiceDetails} /> */}
 
 
        
