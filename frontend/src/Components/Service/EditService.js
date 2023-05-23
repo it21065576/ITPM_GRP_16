@@ -158,7 +158,7 @@ export default function EditService() {
                                 <center>
                                     <h1>
                                         <span class="badge bg-warning text-dark opacity-90" >
-                                            Add New Service Provider
+                                            Edit Service Provider
                                         </span>
                                     </h1>
                                 </center>
