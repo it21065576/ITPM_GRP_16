@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Grid, Card, CardContent, CardMedia, Typography, Button } from '@material-ui/core';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Navbar from '../Navbar';
 import ServiceImage from './Images/service.png';
 import PdfImage from './Images/pdfDown.png';
 
@@ -10,6 +10,8 @@ import PdfImage from './Images/pdfDown.png';
 
 const StaffManagementDashboard = () => {
   return (
+    <>
+    <Navbar />
     <Container maxWidth="lg">
       <Grid container spacing={3} justify="center">
         <Grid item xs={12}>
@@ -63,6 +65,7 @@ const StaffManagementDashboard = () => {
 
       </Grid>
     </Container>
+    </>
   );
 };
 
