@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const ServiceSchema = new mongoose.Schema({
+  sID:{
+    type: String,
+    required: true,
+  },
   fName: {
     type: String,
     required: true,
