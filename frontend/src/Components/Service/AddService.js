@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 export default function AddService(props) {
 
     const [formData, setFormData] = useState({
-        sID:'',
+        sID: '',
         fName: '',
         lName: '',
         address: '',
@@ -36,7 +36,7 @@ export default function AddService(props) {
     const btnDemo = (e) => {
         e.preventDefault();
         setFormData({
-            sID:'S1100',
+            sID: 'S1100',
             fName: 'kamal',
             lName: 'liyanagama',
             address: '43/1,kalidasa road matara',
@@ -99,10 +99,10 @@ export default function AddService(props) {
                         title: 'Details Saved Successfully',
                         showConfirmButton: false,
                         timer: 1500
-                      });
+                    });
                     navigate('/serviceDash'); // Navigate to '/serviceDash'
                     setFormData({
-                        sID:'',
+                        sID: '',
                         fName: '',
                         lName: '',
                         address: '',
@@ -137,7 +137,7 @@ export default function AddService(props) {
                                 </center>
                                 <form className="need-validation" noValidate >
 
-                                <TextField
+                                    <TextField
                                         type="text"
                                         label="Service ID"
                                         variant="outlined"
@@ -148,7 +148,7 @@ export default function AddService(props) {
                                         fullWidth
                                         style={{ marginBottom: '25px', marginBlockStart: "4%" }}
                                     />
-                                 
+
 
                                     <TextField
                                         type="text"
@@ -223,7 +223,7 @@ export default function AddService(props) {
                                         style={{ marginBottom: '25px' }}
                                     />
 
-                                    <TextField
+                                    {/* <TextField
                                         select
                                         label="Gender"
                                         variant="outlined"
@@ -238,9 +238,20 @@ export default function AddService(props) {
                                         </option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
-                                    </TextField>
-
+                                    </TextField> */}
                                     <TextField
+                                        type="text"
+                                        label="Gender"
+                                        variant="outlined"
+                                        name="gender"
+                                        placeholder="Enter Gender"
+                                        value={formData.gender}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                        style={{ marginBottom: '25px' }}
+                                    />
+
+                                    {/* <TextField
                                         select
                                         label="Job Title"
                                         variant="outlined"
@@ -258,7 +269,19 @@ export default function AddService(props) {
                                         <option value="Counsellor">Counsellor</option>
                                         <option value="Lawyer">Lawyer</option>
                                         <option value="Other">Other</option>
-                                    </TextField>
+                                    </TextField> */}
+
+                                    <TextField
+                                        type="text"
+                                        label="Job Title"
+                                        variant="outlined"
+                                        name="job"
+                                        placeholder="Enter Job Title"
+                                        value={formData.job}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                        style={{ marginBottom: '25px' }}
+                                    />
 
                                     <TextField
                                         type="text"
