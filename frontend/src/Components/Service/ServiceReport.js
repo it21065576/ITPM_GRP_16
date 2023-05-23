@@ -192,8 +192,9 @@ const createPdf = (pdfBody) => {
 
             // Table
             doc.autoTable({
-                head: [['No', 'First Name', 'Email', 'Job Title', 'Position', 'Contact No']],
+                head: [['No','Service ID', 'First Name', 'Email', 'Job Title', 'Position', 'Contact No']],
                 body: services.filter(e =>
+                    e.sID && e.sID.toLowerCase().includes(serQuery) ||
                     e.fName.toLowerCase().includes(serQuery) ||
                     e.email.toLowerCase().includes(serQuery) ||
                     e.job.toLowerCase().includes(serQuery) ||
@@ -202,6 +203,7 @@ const createPdf = (pdfBody) => {
                 ).map(function (e, index) {
                     return [
                         index + 1,
+                        e.sID,
                         e.fName,
                         e.email,
                         e.job,
@@ -260,6 +262,7 @@ const createPdf = (pdfBody) => {
                         <thead className="table-info">
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope='col'>Service ID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Contact Number</th>
@@ -273,6 +276,7 @@ const createPdf = (pdfBody) => {
                                     .filter((e) => {
                                         const lowerCaseSerQuery = serQuery.toLowerCase();
                                         return (
+                                            e.sID && e.sID.toLowerCase().includes(lowerCaseSerQuery) ||
                                             e.fName.toLowerCase().includes(lowerCaseSerQuery) ||
                                             e.email.toLowerCase().includes(lowerCaseSerQuery) ||
                                             e.job.toLowerCase().includes(lowerCaseSerQuery) ||
@@ -283,6 +287,7 @@ const createPdf = (pdfBody) => {
                                     .map((service, index) => (
                                         <tr key={index}>
                                             <th className="table-light" scope="row">{index + 1} </th>
+                                            <td className="table-light">{service.sID}</td>                                            
                                             <td className="table-light">{service.fName}</td>
                                             <td className="table-light">{service.email}</td>
                                             <td className="table-light">{service.phone}</td>
