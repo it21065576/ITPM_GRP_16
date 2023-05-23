@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams, useNavigate, useHistory } from "react-router-dom";
 import { TextField } from '@material-ui/core';
+import Swal from 'sweetalert2';
+import SaveIcon from "@material-ui/icons/Save";
+import Button from "@material-ui/core/Button";
+import swal from 'sweetalert';
 
 
-
-const ServiceDash = ({ match }) => {
-    // const ServiceDash = () => {
+export default function EditService() {
 
     const [formData, setFormData] = useState({
+        sID: '',
         fName: '',
         lName: '',
         address: '',
@@ -20,253 +23,292 @@ const ServiceDash = ({ match }) => {
         position: '',
     });
 
-    const [services, setServices] = useState([]);
-    const [allServices, setAllServices] = useState([]);
-    const [serQuery, setQuery] = useState("")
+    const navigate = useNavigate();
+    const { id } = useParams();
+
+    const [sID, setSID] = useState('');
+    const [fName, setFName] = useState('');
+    const [lName, setLName] = useState('');
+    const [address, setAddress] = useState('');
+    const [nic, setNIC] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [gender, setGender] = useState('');
+    const [job, setJob] = useState('');
+    const [position, setPosition] = useState('');
 
     useEffect(() => {
-        axios.get("http://localhost:8002/service")
-            .then(res => {
-                console.log(res);
-                setServices(res.data);
-                setAllServices(res.data);
+        axios.get(`http://localhost:8002/service/${id}`)
+            .then((response) => {
+                const { sID, fName, lName, address, nic, phone, email, gender, job, position } = response.data.services;
+                setSID(sID);
+                setFName(fName);
+                setLName(lName);
+                setAddress(address);
+                setNIC(nic);
+                setPhone(phone);
+                setEmail(email);
+                setGender(gender);
+                setJob(job);
+                setPosition(position);
             })
-            .catch(err => {
-                console.log(err);
+            .catch((error) => {
+                console.error(error);
             });
-    }, []);
+    }, [id]);
 
-    
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
+    const addForm = {
+        sID,
+        fName,
+        lName,
+        address,
+        nic,
+        phone,
+        email,
+        gender,
+        job,
+        position
+
+
+    }
+
+    //page refresh function
+    function refreshPage() {
+        window.location.reload(false);
     };
+
 
     const onSubmit = (e) => {
         e.preventDefault();
 
-        const { fName, lName, address, nic, phone, email, gender, job, position } = formData;
-
         const data = {
-            fName: fName,
-            lName: lName,
-            address: address,
-            nic: nic,
-            phone: phone,
-            email: email,
-            gender: gender,
-            job: job,
-            position: position,
+            sID,
+            fName,
+            lName,
+            address,
+            nic,
+            phone,
+            email,
+            gender,
+            job,
+            position,
         };
 
-        // validation
+        console.log(data)
+
+        //validation 
         const ph = /^[0-9\b]+$/;
         const emi = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if ((!ph.test(String(phone))) || phone.length !== 10) {
-            Swal.fire('Invalid Contact Number!', 'Contact number should be in a valid pattern.', 'error');
+
+        if ((!ph.test(String(phone))) || (phone.length != 10)) {
+            swal("Invalid Contact Number !", "contact number should be valid pattern", "error");
         } else if ((!emi.test(String(email)))) {
-            Swal.fire('Invalid email address!', 'Please enter a valid email address.', 'error');
+            swal("Invalid email address !", "Please enter valid email address", "error");
         } else if (
-            fName.length === 0 ||
-            lName.length === 0 ||
-            address.length === 0 ||
-            nic.length === 0 ||
-            phone.length === 0 ||
-            email.length === 0 ||
-            gender.length === 0 ||
-            job.length === 0 ||
-            position.length === 0
+            sID.trim() === '' ||
+            fName.trim() === '' ||
+            lName.trim() === '' ||
+            address.trim() === '' ||
+            nic.trim() === '' ||
+            phone.trim() === '' ||
+            email.trim() === '' ||
+            gender.trim() === '' ||
+            job.trim() === '' ||
+            position.trim() === ''
         ) {
-            Swal.fire('Please fill in all the details.');
+            swal("Please fill all the details")
         } else {
-            axios.put(`http://localhost:8002/service/update/${match.params.id}`, data)
+
+            axios.put(`http://localhost:8002/service/update/${id}`, data)
                 .then((res) => {
                     let path = "/serviceDash";
                     if (res.data.success) {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Details Saved Successfully',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
+                        alert("Employee Updated Successfully");
+                        navigate(path);
                         setFormData({
-                            fName: '',
-                            lName: '',
-                            address: '',
-                            nic: '',
-                            phone: '',
-                            email: '',
-                            gender: '',
-                            job: '',
-                            position: '',
+                            sID: "",
+                            fName: "",
+                            lName: "",
+                            address: "",
+                            nic: "",
+                            phone: "",
+                            email: "",
+                            gender: "",
+                            job: "",
+                            position: ""
                         });
+
                     }
+                })
+                .catch((error) => {
+                    console.error(error);
                 });
         }
-    };
-
+    }
 
     return (
 
         <>
 
-            <div style={{ marginLeft: '7%', marginBlockStart: '-4%' }}>
+            <div className="order_bground" style={{ zIndex: 98, height: "100vh" }}>
+                <div className="order_bground" style={{ zIndex: 98, height: "100vh" }}>
+                    <div style={{ marginLeft: "28%", marginBlockStart: "3%" }}>
+                        <div class="card" style={{ width: "60%", height: "100%" }}>
+                            <div class="card-body">
+                                <center>
+                                    <h1>
+                                        <span class="badge bg-warning text-dark opacity-90" >
+                                            Add New Service Provider
+                                        </span>
+                                    </h1>
+                                </center>
 
-                <div className="card" style={{ width: '50rem', height: '70rem' }}>
-                    <div className="card-body">
-                        <center><h1><span className="badge bg-warning text-dark opacity-90">Edit Employee</span></h1></center>
-                        <br></br>
-                        <div >
-                            <form className="need-validation" noValidate >
-
-                                <TextField
-                                    type="text"
-                                    label="First Name"
-                                    variant="outlined"
-                                    name="fName"
-                                    placeholder="Enter First Name"
-                                    value={formData.fName}
-                                    onChange={handleInputChange}
-                                    fullWidth
-                                    style={{ marginBottom: '25px', marginBlockStart: "4%" }}
-                                />
-
-                                <TextField
-                                    type="text"
-                                    label="Last Name"
-                                    variant="outlined"
-                                    name="lName"
-                                    placeholder="Enter Last Name"
-                                    value={formData.lName}
-                                    onChange={handleInputChange}
-                                    fullWidth
-                                    style={{ marginBottom: '25px' }}
-                                />
-
-                                <TextField
-                                    type="textarea"
-                                    label="Address"
-                                    variant="outlined"
-                                    name="address"
-                                    placeholder="Enter Address"
-                                    value={formData.address}
-                                    onChange={handleInputChange}
-                                    fullWidth
-                                    style={{ marginBottom: '25px' }}
-                                />
-
-                                <TextField
-                                    type="text"
-                                    label="NIC"
-                                    variant="outlined"
-                                    name="nic"
-                                    placeholder="Enter NIC no"
-                                    value={formData.nic}
-                                    onChange={handleInputChange}
-                                    fullWidth
-                                    style={{ marginBottom: '25px' }}
-                                />
-
-                                <TextField
-                                    type="text"
-                                    label="Contact Number"
-                                    variant="outlined"
-                                    name="phone"
-                                    placeholder="Enter Mobile no"
-                                    value={formData.phone}
-                                    onChange={handleInputChange}
-                                    fullWidth
-                                    style={{ marginBottom: '25px' }}
-                                />
-
-                                <TextField
-                                    type="text"
-                                    label="Email Address"
-                                    variant="outlined"
-                                    name="email"
-                                    placeholder="Enter Email Address"
-                                    value={formData.email}
-                                    onChange={handleInputChange}
-                                    fullWidth
-                                    style={{ marginBottom: '25px' }}
-                                />
-
-                                <TextField
-                                    select
-                                    label="Gender"
-                                    variant="outlined"
-                                    name="gender"
-                                    value={formData.gender}
-                                    onChange={handleInputChange}
-                                    fullWidth
-                                    style={{ marginBottom: '25px', cursor: "pointer" }}
-                                >
-                                    <option value="" disabled>
-                                        -- Select Gender --
-                                    </option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </TextField>
+                                <form className="need-validation" noValidate >
 
 
-                                <TextField
-                                    select
-                                    label="Job Title"
-                                    variant="outlined"
-                                    name="job"
-                                    value={formData.job}
-                                    onChange={handleInputChange}
-                                    fullWidth
-                                    style={{ marginBottom: '25px', cursor: "pointer" }}
-                                >
-                                    <option value="" disabled>
-                                        -- Select Job --
-                                    </option>
-                                    <option value="Doctor">Doctor</option>
-                                    <option value="Police">Police</option>
-                                    <option value="Counsellor">Counsellor</option>
-                                    <option value="Lawyer">Lawyer</option>
-                                    <option value="Other">Other</option>
-                                </TextField>
+                                    <div className="form-group" style={{ marginBottom: '15px' }}>
+                                        <label style={{ marginBottom: '5px' }}>Service ID</label>
+                                        <input type="text"
+                                            className="form-control"
+                                            name="sID"
+                                            placeholder="Enter First Name"
+                                            value={sID}
+                                            onChange={(event) => {
+                                                setSID(event.target.value);
+                                            }} required />
+                                    </div>
+
+                                    <div className="form-group" style={{ marginBottom: '15px' }}>
+                                        <label style={{ marginBottom: '5px' }}>First Name</label>
+                                        <input type="text"
+                                            className="form-control"
+                                            name="fName"
+                                            placeholder="Enter First Name"
+                                            value={fName}
+                                            onChange={(event) => {
+                                                setFName(event.target.value);
+                                            }} required />
+                                    </div>
 
 
-                                <TextField
-                                    type="text"
-                                    label="Position"
-                                    variant="outlined"
-                                    name="position"
-                                    placeholder="Enter Position"
-                                    value={formData.position}
-                                    onChange={handleInputChange}
-                                    fullWidth
-                                    style={{ marginBottom: '25px' }}
-                                />
+                                    <div className="form-group" style={{ marginBottom: '15px' }}>
+                                        <label style={{ marginBottom: '5px' }}>Last Name</label>
+                                        <input type="text"
+                                            className="form-control"
+                                            name="lName"
+                                            placeholder="Enter Last Name"
+                                            value={lName}
+                                            onChange={(event) => {
+                                                setLName(event.target.value);
+                                            }} required />
+                                    </div>
 
 
-                            </form>
-                            <br></br>
-                            <center>
-                                <a className="btn btn-warning btn-lg" type="submit" style={{ marginTop: '15px', marginLeft: '1%' }} onClick={onSubmit}>
-                                    <i className="far fa-check-square" ></i>
-                                    &nbsp; Update
-                                </a>
-                                &nbsp;
-                                &nbsp;
-                            </center>
-                            <br></br>
+                                    <div className="form-group" style={{ marginBottom: '15px' }}>
+                                        <label style={{ marginBottom: '5px' }}>Address</label>
+                                        <input type="textarea"
+                                            className="form-control"
+                                            name="address"
+                                            placeholder="Enter Address"
+                                            value={address}
+                                            onChange={(event) => {
+                                                setAddress(event.target.value);
+                                            }} required />
+                                    </div>
 
+
+                                    <div className="form-group" style={{ marginBottom: '15px' }}>
+                                        <label style={{ marginBottom: '5px' }}>NIC</label>
+                                        <input type="text"
+                                            className="form-control"
+                                            name="nic"
+                                            placeholder="Enter NIC no"
+                                            value={nic}
+                                            onChange={(event) => {
+                                                setNIC(event.target.value);
+                                            }} required />
+                                    </div>
+
+
+
+                                    <div className="form-group" style={{ marginBottom: '15px' }}>
+                                        <label style={{ marginBottom: '5px' }}>Contact Number</label>
+                                        <input type="text"
+                                            className="form-control"
+                                            name="phone"
+                                            placeholder="Enter Contact no"
+                                            value={phone}
+                                            onChange={(event) => {
+                                                setPhone(event.target.value);
+                                            }} required />
+                                    </div>
+
+
+                                    <div className="form-group" style={{ marginBottom: '15px' }}>
+                                        <label style={{ marginBottom: '5px' }}>Email Address</label>
+                                        <input type="textarea"
+                                            className="form-control"
+                                            name="email"
+                                            placeholder="Enter Email Address"
+                                            value={email}
+                                            onChange={(event) => {
+                                                setEmail(event.target.value);
+                                            }} required />
+                                    </div>
+
+
+                                    <div className="form-group col-md-4" style={{ marginBottom: '15px' }}>
+                                        <label style={{ marginBottom: '5px' }}>Gender</label>
+                                        <select name="gender" onChange={(event) => {
+                                            setGender(event.target.value);
+                                        }} value={gender} defaultValue="Select Type" class="form-control">
+                                            <option defaultValue>-- Select Gender --</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div className="form-group col-md-4" style={{ marginBottom: '15px' }}>
+                                        <label style={{ marginBottom: '5px' }}>Job Title</label>
+                                        <select name="gender" onChange={(event) => {
+                                            setJob(event.target.value);
+                                        }} value={job} defaultValue="Select Type" class="form-control">
+                                            <option defaultValue>-- Select Job --</option>
+                                            <option value="Doctor">Doctor</option>
+                                            <option value="Police">Police</option>
+                                            <option value="Counsellor">Counsellor</option>
+                                            <option value="Lawyer">Lawyer</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="form-group" style={{ marginBottom: '15px' }}>
+                                        <label style={{ marginBottom: '5px' }}>Position</label>
+                                        <input type="textarea"
+                                            className="form-control"
+                                            name="position"
+                                            placeholder="Enter Position"
+                                            value={position}
+                                            onChange={(event) => {
+                                                setPosition(event.target.value);
+                                            }} required />
+                                    </div>
+                                    <center>
+                                        <a className="btn btn-warning btn-lg" type="submit" style={{ marginTop: '15px', marginLeft: '1%' }} onClick={onSubmit}>
+                                            <i className="far fa-check-square" ></i>
+                                            Update
+                                        </a>
+                                    </center>
+
+                                </form>
+                            </div>
                         </div>
-
                     </div>
                 </div>
-                <br></br>
             </div>
-        </>
-    )
-}
 
-export default ServiceDash;
+        </>
+
+    );
+}
