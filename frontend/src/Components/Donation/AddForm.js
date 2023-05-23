@@ -3,10 +3,10 @@ import axios from "axios";
 import { Navigate, useParams} from "react-router-dom";
 import Footer from '../Footer';
 import Navbar from '../Navbar';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
+// import Button from 'react-bootstrap/Button';
+// import Col from 'react-bootstrap/Col';
+// import Form from 'react-bootstrap/Form';
+// import Row from 'react-bootstrap/Row';
 import "../../Styles/addDonarForm.css";
 
 
@@ -51,7 +51,7 @@ export default function AddForm() {
 
       alert("Details successfully added",refreshPage());
       //console.log(newAppointment);
-      <a href="/amount"></a>
+      
 
     }).catch((err)=>{
 

@@ -92,7 +92,7 @@ export default function AddForm() {
             <p><h6>women with a future and a fair chance.</h6></p></center></b></div> 
 <div className='projectName-container'>
       <label for="fName">First Name</label> <br/>
-      <input type="text" id="fName"  className="values" value = {fName} name="fName"  
+      <input type="text" id="fName"  className="values" value = {fName} name="fName"  readOnly
       onChange={(event)=>{
           setfName(event.target.value);
       }} required/>
@@ -100,7 +100,7 @@ export default function AddForm() {
       
       <div className='time-container'>
       <label for="lName">Last Name</label> <br/>
-      <input type="text" id="lName" className="values"  value = {lName}  name="lName" 
+      <input type="text" id="lName" className="values"  value = {lName}  name="lName" readOnly
       onChange={(event)=>{
           setlName(event.target.value);
       }} required/>
@@ -109,42 +109,36 @@ export default function AddForm() {
       
       <div className='location-container'>
       <label for="address">Address</label> <br/>  
-      <input type="text" id="address" className="values"  value = {address} name="address"  onChange={(event)=>{
+      <input type="text" id="address" className="values"  value = {address} name="address"  readOnly onChange={(event)=>{
           setaddress(event.target.value);
       }} required/>
       </div><br/>
 
       <div className='discription-container'>
       <label for="phone">Phone Number</label><br/> 
-      <input type="text" id="phone" className="values" value = {phone} name="phone"  onChange={(event)=>{
+      <input type="text" id="phone" className="values" value = {phone} name="phone"  readOnly onChange={(event)=>{
           setphone(event.target.value);
       }} required/>
       </div><br/>
       <div className='discription-container'>
       <label for="email">Email Address</label><br/> 
-      <input type="text" id="email" className="values" value = {email} name="email"  onChange={(event)=>{
+      <input type="text" id="email" className="values" value = {email} name="email"  readOnly onChange={(event)=>{
           setemail(event.target.value);
       }} required/>
       </div><br/>
 
       <div className='time-container'>
       <label for="amount"><b>Amount</b></label> <br/>
-      <input type="text" id="amount" className="values"  value = {amount}  name="amount"  onChange={(event)=>{
+      <input type="text" id="amount" className="values"  value = {amount}  name="amount" readOnly onChange={(event)=>{
           setamount(event.target.value);
       }} required/>
       </div><br/>
       
-<button className="sbtn2" type="submit" id="myBtn2" style={{marginTop:'1px'}} onClick={sendDataToAPI}>
-                                <i className="far fa-check-square"></i>
-                                &nbsp; EDIT DETAILS
-                            </button>
-                            <br/>
-                            <br/>
-                            <a href="/amount">
+      <a href="/amount">
           <button type="button" className="btn btn-primary">
             Back
           </button>
-          </a>                   
+          </a>
      
       </form>
     

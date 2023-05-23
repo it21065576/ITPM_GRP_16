@@ -5,6 +5,7 @@ import Image from "../../Images/donar.jpg"
 import { lightBlue } from "@mui/material/colors";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Link } from "react-router-dom";
 import "../../Styles/amount.css";
 import Footer from '../Footer';
@@ -97,12 +98,16 @@ export default function Amount() {
                  alt="Mountains"
                />
                <figcaption>
+                <Link to = {"/view/" + a._id}>
+                  <VisibilityIcon sx={{marginTop:-10 ,marginLeft:5, fontSize: 40, color: lightBlue[50] }} />
+                </Link>
                  <Link to={"/editForm/" + a._id}>
                    <EditIcon sx={{marginTop:-10 ,marginLeft:5, fontSize: 40, color: lightBlue[50] }} />
                  </Link>
                  <DeleteIcon
                    onClick={() => confirmDeletebox(a._id)}
                    sx={{marginBottom:5.5,marginLeft:7, fontSize: 40, color: lightBlue[50] }}
+
                  />
                </figcaption>
              </figure>
