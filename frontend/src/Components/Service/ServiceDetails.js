@@ -1,95 +1,73 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { MDBCard, MDBCardBody, MDBCardText } from 'mdb-react-ui-kit';
+import { useParams } from "react-router-dom";
 
-export default class ServiceDetails extends Component {
-    constructor(props) {
-        super(props);
+export default function EditService() {
+  const [services, setServices] = useState({});
 
-        this.state = {
-            service: {}
-        };
-    }
+  const { id } = useParams();
 
-    componentDidMount() {
-        console.log("hello");
+  useEffect(() => {
+    axios.get(`http://localhost:8002/service/${id}`)
+      .then((response) => {
+        console.log(response);
+        const { services } = response.data;
+        setServices(services);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [id]);
 
-        const id = this.props.match.params.id;
+  const { sID, fName, lName, address, nic, phone, email, gender, job, position } = services;
 
-        axios.get(`../../../../backend/routes/Service/ServiceRoute/service/${id}`).then((res) => {
-            if (res.data.success) {
-                this.setState({
-                    service: res.data.service
-                });
+  return (
+    <>
+      <div className="order_bground" style={{ zIndex: 98, height: "100vh" }}>
+        <div style={{ marginBlockStart: '9%', marginLeft: '15%' }}>
+          <div className="card" style={{ width: '50%', height: '925px', borderBlockColor: 'black', borderBlockWidth: '4px', borderBlockStartStyle: 'groove' }}>
+            <div className="card-body">
+              <div className="container" style={{ marginTop: '20px' }}>
+                <br />
+                <h3>Employee Details</h3>
+                <br />
+                <form>
+                  <label>Employee ID</label>
+                  <input className="form-control" type="text" value={sID} aria-label="Disabled input example" disabled />
 
-                console.log(this.state.service);
-            }
-        });
-    }
+                  <label>First Name</label>
+                  <input className="form-control" type="text" value={fName} aria-label="Disabled input example" disabled />
 
-    render() {
+                  <label>Last Name</label>
+                  <input className="form-control" type="text" value={lName} aria-label="Disabled input example" disabled />
 
-        const { fName, lName, address, nic, phone, email, gender, job, position } = this.state.service;
+                  <label>Address</label>
+                  <input className="form-control" type="text" value={address} aria-label="Disabled input example" disabled />
 
+                  <label>NIC</label>
+                  <input className="form-control" type="text" value={nic} aria-label="Disabled input example" disabled />
 
-        return (
-            <>
-                {/* <Navbar /> */}
-                <div className="order_bground" style={{ zIndex: 98, height: "100vh" }} >
+                  <label>Phone</label>
+                  <input className="form-control" type="text" value={phone} aria-label="Disabled input example" disabled />
 
-                    <div style={{ marginBlockStart: '9%', marginLeft: '15%' }}>
-                        <div class="card" style={{ width: '50%', height: '925px', borderBlockColor: 'black', borderBlockWidth: '4px', borderBlockStartStyle: 'groove' }}>
-                            <div class="card-body">
-                                <div className="container" style={{ margingTop: '20px' }}>
-                                    <br></br>
+                  <label>Email</label>
+                  <input className="form-control" type="text" value={email} aria-label="Disabled input example" disabled />
 
-                                    <h3>Service Provider Details</h3><br></br>
-                                    {/* <h4>Service ID : {#}</h4><br></br> */}
+                  <label>Gender</label>
+                  <input className="form-control" type="text" value={gender} aria-label="Disabled input example" disabled />
 
-                                    <form>
+                  <label>Job Title</label>
+                  <input className="form-control" type="text" value={job} aria-label="Disabled input example" disabled />
 
-                                        <label>FirstName</label>
-                                        <input className="form-control" type="text" placeholder={fName} aria-label="Disabled input example" disabled></input>
-
-                                        <label>LastName</label>
-                                        <input className="form-control" type="text" placeholder={lName} aria-label="Disabled input example" disabled></input>
-
-                                        <label>Address</label>
-                                        <input className="form-control" type="text" placeholder={address} aria-label="Disabled input example" disabled></input>
-
-                                        <label>NIC</label>
-                                        <input className="form-control" type="text" placeholder={nic} aria-label="Disabled input example" disabled></input>
-
-                                        <label>Phone</label>
-                                        <input className="form-control" type="text" placeholder={phone} aria-label="Disabled input example" disabled></input>
-
-                                        <label>Email</label>
-                                        <input className="form-control" type="text" placeholder={email} aria-label="Disabled input example" disabled></input>
-
-                                        <label>Gender</label>
-                                        <input className="form-control" type="text" placeholder={gender} aria-label="Disabled input example" disabled></input>
-
-                                        <label>Job Title</label>
-                                        <input className="form-control" type="text" placeholder={job} aria-label="Disabled input example" disabled></input>
-
-                                        <label>Position</label>
-                                        <input className="form-control" type="text" placeholder={position} aria-label="Disabled input example" disabled></input>
-
-                                        <br></br>
-                                        <br></br>
-                                        <br></br>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                    </div>
-                </div>
-            </>
-        )
-    }
+                  <label>Position</label>
+                  <input className="form-control" type="text" value={position} aria-label="Disabled input example" disabled />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
+
