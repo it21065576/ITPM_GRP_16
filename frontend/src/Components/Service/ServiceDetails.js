@@ -29,7 +29,7 @@ export default function EditService() {
             <div className="card-body">
               <div className="container" style={{ marginTop: '20px' }}>
                 <br />
-                <h3>Employee Details</h3>
+                <h3>Service Details</h3>
                 <br />
                 <form>
                   <label>Employee ID</label>
