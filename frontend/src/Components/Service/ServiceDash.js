@@ -7,6 +7,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import Navbar from '../Navbar';
+
 
 
 
@@ -77,6 +79,7 @@ const ServiceDash = () => {
 
     return (
         <>
+        <Navbar/>
             <div style={{ width: '20%', marginLeft: '80%', marginBlockStart: '2%' }}>
                 <form className="d-flex">
                     <input className="form-control me-2"
