@@ -32,9 +32,9 @@ const Navbar = () => {
             <Grid item xs={8}>
               <Box sx={{ width: '100%' }}>
                 <Tabs value={value} onChange={handleChange} textColor="#ffff" indicatorColor="secondary">
-                  <Tab to="/staff_home" LinkComponent={Link} label="Dashboard" />
-                  <Tab to="/staff_dash" LinkComponent={Link} label="Employee" />
-                  <Tab to="/dashshow" LinkComponent={Link} label="Attendance" />
+                  <Tab to="/" LinkComponent={Link} label="Dashboard" />
+                  <Tab to="/serviceDash" LinkComponent={Link} label="Service" />
+                  <Tab to="/serviceReport" LinkComponent={Link} label="Report Create" />
 
                 
                  
